@@ -1,0 +1,26 @@
+{
+  "name": "pandoc-service",
+  "version": "1.0.0",
+  "type": "module",
+  "author": "Vadim Shestakov",
+  "license": "MIT",
+  "main": "dist/main.js",
+  "scripts": {
+    "build": "tsc && tsc-alias",
+    "start": "node dist/main.js",
+    "start:dev": "nodemon",
+    "start:prod": "node dist/main.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.0.0",
+    "nodemon": "^3.1.11",
+    "tsc-alias": "^1.8.16",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  }
+}
