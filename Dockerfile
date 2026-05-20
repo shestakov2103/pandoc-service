@@ -1,14 +1,16 @@
-FROM node:lts-slim AS builder
+FROM node:lts-slim AS build
+
+RUN corepack enable
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY pnpm-lock.yaml package.json pnpm-workspace.yaml ./
 
-RUN npm install
+RUN pnpm install --frozen-lockfile
 
-COPY . .
+COPY . ./
 
-RUN npm run build
+RUN pnpm run build
 
 FROM node:lts-slim
 
@@ -20,14 +22,18 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 WORKDIR /app
 
-COPY package*.json ./
+RUN corepack enable
 
-RUN npm install --only=production
+COPY pnpm-lock.yaml package.json ./
 
-COPY --from=builder /app/dist ./dist
+RUN pnpm install --prod --frozen-lockfile
 
-COPY --from=builder /app/templates ./templates
+COPY --from=build /app/dist ./dist
+COPY --from=build /app/templates ./templates
 
-EXPOSE ${PORT:-3000}
+ENV NODE_ENV=production
+ENV PORT=3000
+
+EXPOSE 3000
 
 CMD ["node", "dist/main.js"]
