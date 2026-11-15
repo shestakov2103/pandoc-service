@@ -1,4 +1,4 @@
-FROM node:lts-slim AS build
+FROM node:24-bookworm-slim AS build
 
 RUN corepack enable
 
@@ -12,7 +12,7 @@ COPY . ./
 
 RUN pnpm run build
 
-FROM node:lts-slim
+FROM node:24-bookworm-slim
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     pandoc \

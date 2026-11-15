@@ -25,7 +25,7 @@ app.post('/convert', (req: express.Request<{}, {}, ConvertRequest>, res: express
     }
 
     const args = [
-        '-f', 'markdown',
+        '-f', 'markdown+tex_math_single_backslash',
         '-t', 'docx',
         `--reference-doc=${REFERENCE_DOC}`,
         '-M', 'lang=ru-RU',
